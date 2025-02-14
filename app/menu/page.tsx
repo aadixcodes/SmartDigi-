@@ -16,7 +16,7 @@ const menuItems = [
     description: 'Crispy vegetable spring rolls served with sweet chili sauce', 
     price: 199, 
     rating: 4.2, 
-    image: 'https://images.unsplash.com/photo-1544037803-b16a45cd3293?q=80&w=800'
+    image: 'https://s.lightorangebean.com/media/20240914144947/Thai-Veggie-Spring-Rolls_done.png'
   },
   { 
     id: '2', 
@@ -35,7 +35,7 @@ const menuItems = [
     description: 'Herb-marinated grilled chicken with roasted vegetables', 
     price: 399, 
     rating: 4.8, 
-    image: 'https://images.unsplash.com/photo-1632197336868-5557230f6e48?q=80&w=800'
+    image: 'https://www.allrecipes.com/thmb/QYJhpLC7M7tz8aAAlel_38159So=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/1017459-spicy-grilled-chicken-Lela-4x3-1-e462732541e74ceeadb8edbe62d92423.jpg'
   },
   { 
     id: '4', 
@@ -54,7 +54,7 @@ const menuItems = [
     description: 'Traditional yogurt-based drink with mango', 
     price: 149, 
     rating: 4.7, 
-    image: 'https://images.unsplash.com/photo-1626201850129-a96d13e1c9e7?q=80&w=800'
+    image: 'https://media.bluediamond.com/uploads/2023/01/24175942/14_Dairy-Free_Mango_Lassi-scaled.jpg'
   },
   { 
     id: '6', 
@@ -73,7 +73,7 @@ const menuItems = [
     description: 'Traditional Indian sweet in sugar syrup', 
     price: 129, 
     rating: 4.9, 
-    image: 'https://images.unsplash.com/photo-1601303516283-21dbf6077f41?q=80&w=800'
+    image: 'https://theartisticcook.com/wp-content/uploads/2024/10/Gulab-Jamun-with-Milk-Powder.jpg'
   },
 ];
 
