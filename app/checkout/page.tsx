@@ -8,19 +8,17 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { CreditCard, Wallet, Ban as Bank } from 'lucide-react';
-import { useToast } from '@/components/ui/use-toast';
+import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 
 export default function CheckoutPage() {
   const { items, total, clearCart } = useCart();
   const [paymentMethod, setPaymentMethod] = useState('card');
-  const { toast } = useToast();
   const router = useRouter();
 
   const handlePayment = () => {
     // Simulate payment processing
-    toast({
-      title: "Payment Successful!",
+    toast.success("Payment Successful!", {
       description: "Your order has been placed successfully.",
     });
     clearCart();
