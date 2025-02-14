@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { CreditCard, Wallet, Ban as Bank } from 'lucide-react';
+import { CreditCard, Wallet, Ban as Bank, Check } from 'lucide-react';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 
@@ -15,15 +15,12 @@ export default function CheckoutPage() {
   const { items, total, clearCart } = useCart();
   const [paymentMethod, setPaymentMethod] = useState('card');
   const router = useRouter();
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   
 
   const handlePayment = () => {
-    // Simulate payment processing
-    toast.success("Payment Successful!", {
-      description: "Your order has been placed successfully.",
-    });
-    clearCart();
-    router.push('/');
+    // Remove toast and router push from here
+    setShowSuccessModal(true);
   };
 
   useEffect(() => {
@@ -158,6 +155,29 @@ export default function CheckoutPage() {
           </Card>
         </div>
       </div>
+      {showSuccessModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+          <Card className="p-6 max-w-md w-full text-center">
+            <div className="flex justify-center text-green-500 mb-4">
+              <Check className="h-12 w-12" strokeWidth={2} />
+            </div>
+            <h3 className="text-xl font-bold mb-2">Order Successful!</h3>
+            <p className="text-gray-600 mb-4">
+              Your food order is being prepared. Please wait a moment, 
+              we'll serve you in just a few minutes. Thank you!
+            </p>
+            <Button
+              className="w-full bg-[#FE9E0C] hover:bg-[#E08900]"
+              onClick={() => {
+                clearCart();
+                router.push('/menu');
+              }}
+            >
+              Go Back to Menu
+            </Button>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }
