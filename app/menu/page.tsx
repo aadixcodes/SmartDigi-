@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { useCart } from '@/lib/store';
 import { Plus, Minus, ShoppingCart, ArrowRight, Star, Search } from 'lucide-react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 const menuItems = [
   // Starters
@@ -137,70 +138,78 @@ export default function MenuPage() {
                     (item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                      item.description.toLowerCase().includes(searchQuery.toLowerCase()))
                   )
-                  .map(item => {
+                  .map((item, index) => {
                     const quantity = getItemQuantity(item.id);
                     return (
-                      <Card key={item.id} className="overflow-hidden hover:shadow-md transition-shadow duration-300 rounded-lg max-w-[255px] h-[330px] mx-auto">
-                        <div className="relative h-48">
-                          <img
-                            src={item.image}
-                            alt={item.name}
-                            className="object-cover w-full h-full"
-                          />
-                        </div>
-                        
-                        <div className="p-3 h-[69px] flex flex-col justify-between">
-                          <div>
-                            <h3 className="text-sm font-semibold text-gray-900 line-clamp-1">{item.name}</h3>
-                            <p className="text-xs text-gray-600 line-clamp-1">{item.description}</p>
+                      <motion.div
+                        key={item.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.05, duration: 0.3 }}
+                        className="overflow-hidden"
+                      >
+                        <Card className="overflow-hidden hover:shadow-md transition-shadow duration-300 rounded-lg max-w-[255px] h-[330px] mx-auto">
+                          <div className="relative h-48">
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              className="object-cover w-full h-full"
+                            />
                           </div>
                           
-                          <div className="flex items-center justify-between mt-1">
-                            <div className="flex items-center gap-1">
-                              <Star className="h-3 w-3 text-green-500 fill-current" />
-                              <span className="text-xs font-medium text-gray-700">
-                                {item.rating}/5
-                              </span>
+                          <div className="p-3 h-[69px] flex flex-col justify-between">
+                            <div>
+                              <h3 className="text-sm font-semibold text-gray-900 line-clamp-1">{item.name}</h3>
+                              <p className="text-xs text-gray-600 line-clamp-1">{item.description}</p>
                             </div>
-                            <span className="text-sm font-bold text-gray-900">₹{item.price}</span>
+                            
+                            <div className="flex items-center justify-between mt-1">
+                              <div className="flex items-center gap-1">
+                                <Star className="h-3 w-3 text-green-500 fill-current" />
+                                <span className="text-xs font-medium text-gray-700">
+                                  {item.rating}/5
+                                </span>
+                              </div>
+                              <span className="text-sm font-bold text-gray-900">₹{item.price}</span>
+                            </div>
                           </div>
-                        </div>
 
-                        <div className="px-3 mt-2 pb-3">
-                          {quantity === 0 ? (
-                            <Button
-                              onClick={() => addItem({
-                                id: item.id,
-                                name: item.name,
-                                price: item.price,
-                                quantity: 1,
-                                image: item.image,
-                              })}
-                              className="w-full bg-[#FE9E0C] hover:bg-[#E08900] text-white rounded-lg py-1 text-xs"
-                            >
-                              Add to Cart
-                            </Button>
-                          ) : (
-                            <div className="flex items-center justify-center gap-2 bg-gray-100 rounded-lg py-1">
+                          <div className="px-3 mt-2 pb-3">
+                            {quantity === 0 ? (
                               <Button
-                                variant="ghost"
-                                className="h-6 w-6 rounded-full text-[#FE9E0C] hover:bg-[#FFF5E9] p-0"
-                                onClick={() => updateQuantity(item.id, quantity - 1)}
+                                onClick={() => addItem({
+                                  id: item.id,
+                                  name: item.name,
+                                  price: item.price,
+                                  quantity: 1,
+                                  image: item.image,
+                                })}
+                                className="w-full bg-[#FE9E0C] hover:bg-[#E08900] text-white rounded-lg py-1 text-xs"
                               >
-                                <Minus className="h-3 w-3" />
+                                Add to Cart
                               </Button>
-                              <span className="text-sm font-medium">{quantity}</span>
-                              <Button
-                                variant="ghost"
-                                className="h-6 w-6 rounded-full text-[#FE9E0C] hover:bg-[#FFF5E9] p-0"
-                                onClick={() => updateQuantity(item.id, quantity + 1)}
-                              >
-                                <Plus className="h-3 w-3" />
-                              </Button>
-                            </div>
-                          )}
-                        </div>
-                      </Card>
+                            ) : (
+                              <div className="flex items-center justify-center gap-2 bg-gray-100 rounded-lg py-1">
+                                <Button
+                                  variant="ghost"
+                                  className="h-6 w-6 rounded-full text-[#FE9E0C] hover:bg-[#FFF5E9] p-0"
+                                  onClick={() => updateQuantity(item.id, quantity - 1)}
+                                >
+                                  <Minus className="h-6 w-6" />
+                                </Button>
+                                <span className="text-xl mx-4 font-medium">{quantity}</span>
+                                <Button
+                                  variant="ghost"
+                                  className="h-6 w-6 rounded-full text-[#FE9E0C] hover:bg-[#FFF5E9] p-0"
+                                  onClick={() => updateQuantity(item.id, quantity + 1)}
+                                >
+                                  <Plus className="h-6 w-6" />
+                                </Button>
+                              </div>
+                            )}
+                          </div>
+                        </Card>
+                      </motion.div>
                     );
                   })}
               </div>
@@ -208,70 +217,78 @@ export default function MenuPage() {
           ))
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-            {filteredItems.map(item => {
+            {filteredItems.map((item, index) => {
               const quantity = getItemQuantity(item.id);
               return (
-                <Card key={item.id} className="overflow-hidden hover:shadow-md transition-shadow duration-300 rounded-lg max-w-[255px] h-[330px] mx-auto">
-                  <div className="relative h-48">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="object-cover w-full h-full"
-                    />
-                  </div>
-                  
-                  <div className="p-3 h-[69px] flex flex-col justify-between">
-                    <div>
-                      <h3 className="text-sm font-semibold text-gray-900 line-clamp-1">{item.name}</h3>
-                      <p className="text-xs text-gray-600 line-clamp-1">{item.description}</p>
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05, duration: 0.3 }}
+                  className="overflow-hidden"
+                >
+                  <Card className="overflow-hidden hover:shadow-md transition-shadow duration-300 rounded-lg max-w-[255px] h-[330px] mx-auto">
+                    <div className="relative h-48">
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="object-cover w-full h-full"
+                      />
                     </div>
                     
-                    <div className="flex items-center justify-between mt-1">
-                      <div className="flex items-center gap-1">
-                        <Star className="h-3 w-3 text-green-500 fill-current" />
-                        <span className="text-xs font-medium text-gray-700">
-                          {item.rating}/5
-                        </span>
+                    <div className="p-3 h-[69px] flex flex-col justify-between">
+                      <div>
+                        <h3 className="text-sm font-semibold text-gray-900 line-clamp-1">{item.name}</h3>
+                        <p className="text-xs text-gray-600 line-clamp-1">{item.description}</p>
                       </div>
-                      <span className="text-sm font-bold text-gray-900">₹{item.price}</span>
+                      
+                      <div className="flex items-center justify-between mt-1">
+                        <div className="flex items-center gap-1">
+                          <Star className="h-3 w-3 text-green-500 fill-current" />
+                          <span className="text-xs font-medium text-gray-700">
+                            {item.rating}/5
+                          </span>
+                        </div>
+                        <span className="text-sm font-bold text-gray-900">₹{item.price}</span>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="px-3 mt-2 pb-3">
-                    {quantity === 0 ? (
-                      <Button
-                        onClick={() => addItem({
-                          id: item.id,
-                          name: item.name,
-                          price: item.price,
-                          quantity: 1,
-                          image: item.image,
-                        })}
-                        className="w-full bg-[#FE9E0C] hover:bg-[#E08900] text-white rounded-lg py-1 text-xs"
-                      >
-                        Add to Cart
-                      </Button>
-                    ) : (
-                      <div className="flex items-center justify-center gap-2 bg-gray-100 rounded-lg py-1">
+                    <div className="px-3 mt-2 pb-3">
+                      {quantity === 0 ? (
                         <Button
-                          variant="ghost"
-                          className="h-6 w-6 rounded-full text-[#FE9E0C] hover:bg-[#FFF5E9] p-0"
-                          onClick={() => updateQuantity(item.id, quantity - 1)}
+                          onClick={() => addItem({
+                            id: item.id,
+                            name: item.name,
+                            price: item.price,
+                            quantity: 1,
+                            image: item.image,
+                          })}
+                          className="w-full bg-[#FE9E0C] hover:bg-[#E08900] text-white rounded-lg py-1 text-xs"
                         >
-                          <Minus className="h-3 w-3" />
+                          Add to Cart
                         </Button>
-                        <span className="text-sm font-medium">{quantity}</span>
-                        <Button
-                          variant="ghost"
-                          className="h-6 w-6 rounded-full text-[#FE9E0C] hover:bg-[#FFF5E9] p-0"
-                          onClick={() => updateQuantity(item.id, quantity + 1)}
-                        >
-                          <Plus className="h-3 w-3" />
-                        </Button>
-                      </div>
-                    )}
-                  </div>
-                </Card>
+                      ) : (
+                        <div className="flex items-center justify-center gap-2 bg-gray-100 rounded-lg py-1">
+                          <Button
+                            variant="ghost"
+                            className="h-6 w-6 rounded-full text-[#FE9E0C] hover:bg-[#FFF5E9] p-0"
+                            onClick={() => updateQuantity(item.id, quantity - 1)}
+                          >
+                            <Minus className="h-3 w-3" />
+                          </Button>
+                          <span className="text-sm font-medium">{quantity}</span>
+                          <Button
+                            variant="ghost"
+                            className="h-6 w-6 rounded-full text-[#FE9E0C] hover:bg-[#FFF5E9] p-0"
+                            onClick={() => updateQuantity(item.id, quantity + 1)}
+                          >
+                            <Plus className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                  </Card>
+                </motion.div>
               );
             })}
           </div>

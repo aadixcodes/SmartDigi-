@@ -10,6 +10,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { CreditCard, Wallet, Ban as Bank, Check } from 'lucide-react';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function CheckoutPage() {
   const { items, total, clearCart } = useCart();
@@ -155,29 +156,43 @@ export default function CheckoutPage() {
           </Card>
         </div>
       </div>
-      {showSuccessModal && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
-          <Card className="p-6 max-w-md w-full text-center">
-            <div className="flex justify-center text-green-500 mb-4">
-              <Check className="h-12 w-12" strokeWidth={2} />
-            </div>
-            <h3 className="text-xl font-bold mb-2">Order Successful!</h3>
-            <p className="text-gray-600 mb-4">
-              Your food order is being prepared. Please wait a moment, 
-              we'll serve you in just a few minutes. Thank you!
-            </p>
-            <Button
-              className="w-full bg-[#FE9E0C] hover:bg-[#E08900]"
-              onClick={() => {
-                clearCart();
-                router.push('/menu');
-              }}
+      <AnimatePresence>
+        {showSuccessModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.95, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 20 }}
+              className="w-full max-w-md"
             >
-              Go Back to Menu
-            </Button>
-          </Card>
-        </div>
-      )}
+              <Card className="p-6 text-center">
+                <div className="flex justify-center text-green-500 mb-4">
+                  <Check className="h-12 w-12" strokeWidth={2} />
+                </div>
+                <h3 className="text-xl font-bold mb-2">Order Successful!</h3>
+                <p className="text-gray-600 mb-4">
+                  Your food order is being prepared. Please wait a moment, 
+                  we'll serve you in just a few minutes. Thank you!
+                </p>
+                <Button
+                  className="w-full bg-[#FE9E0C] hover:bg-[#E08900]"
+                  onClick={() => {
+                    clearCart();
+                    router.push('/menu');
+                  }}
+                >
+                  Go Back to Menu
+                </Button>
+              </Card>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
