@@ -99,7 +99,7 @@ export default function MenuPage() {
     <div className="min-h-screen bg-gray-50 pb-24">
       <div className="container mx-auto px-4 py-8">
         <header className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-[#FE9E0C] mb-2">SmartDigi</h1>
+          <h1 className="text-4xl font-bold text-[#FE9E0C] mb-2">SmartDini</h1>
           <p className="text-lg text-gray-600 mb-6">Please choose your menu</p>
           
           <div className="flex flex-col sm:flex-row gap-4 items-center justify-center mb-8">
