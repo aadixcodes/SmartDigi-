@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useCart } from '@/lib/store';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -15,6 +15,7 @@ export default function CheckoutPage() {
   const { items, total, clearCart } = useCart();
   const [paymentMethod, setPaymentMethod] = useState('card');
   const router = useRouter();
+  
 
   const handlePayment = () => {
     // Simulate payment processing
@@ -25,9 +26,15 @@ export default function CheckoutPage() {
     router.push('/');
   };
 
+  useEffect(() => {
+    if (items.length === 0) {
+      router.push('/menu');
+    }
+  }, [items, router]);
+  
+  // Ensure that the component renders properly even before redirection
   if (items.length === 0) {
-    router.push('/menu');
-    return null;
+    return null; 
   }
 
   return (
