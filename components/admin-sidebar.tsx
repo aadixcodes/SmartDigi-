@@ -9,7 +9,8 @@ import {
   ClipboardList,
   UtensilsCrossed,
   Menu,
-  X
+  X,
+  Bell
 } from "lucide-react";
 
 export function AdminSidebar() {
@@ -31,6 +32,7 @@ export function AdminSidebar() {
 
   const navItems = [
     { name: "Dashboard", href: "/admin", icon: <LayoutDashboard className="h-5 w-5" /> },
+    { name: "New Orders", href: "/admin/new-orders", icon: <Bell className="h-5 w-5" /> },
     { name: "Orders", href: "/admin/orders", icon: <ClipboardList className="h-5 w-5" /> },
     { name: "Add Menu", href: "/admin/add-menu", icon: <UtensilsCrossed className="h-5 w-5" /> },
   ];
@@ -56,7 +58,7 @@ export function AdminSidebar() {
         className="fixed left-0 top-0 h-screen w-72 border-r bg-white z-40 shadow-lg"
       >
         <div className="h-16 px-6 border-b flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-[#FE9E0C]">SmartDigi</h1>
+          <h1 className="text-2xl font-bold text-[#FE9E0C]">SmartDini</h1>
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="lg:hidden p-1 hover:bg-gray-100 rounded"
